@@ -1,12 +1,13 @@
 
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QStatusBar, QGridLayout
 
-from Cell import Cell
+from views.Cell import Cell
 
 
 class Window(QMainWindow):
-    def __init__(self):
+    def __init__(self, controller):
         super(Window, self).__init__()
+        self.controller = controller
         self.setGeometry(300, 300, 300, 300)
         self.setWindowTitle("Tic Tac Toe OO")
         self.layout = QVBoxLayout()
@@ -20,6 +21,7 @@ class Window(QMainWindow):
     def add_play_again_btn(self):
         self.play_again_btn = QPushButton("Play Again")
         self.layout.addWidget(self.play_again_btn)
+        self.play_again_btn.clicked.connect(self.controller.button_clicked)
 
     def add_status_bar(self):
         self.status_bar = QStatusBar()
@@ -33,7 +35,7 @@ class Window(QMainWindow):
         for row in range(3):
             row_buttons = []
             for col in range(3):
-                cell = Cell("-")
+                cell = Cell("-", row, col, self.controller)
                 row_buttons.append(cell)
                 layout.addWidget(cell, row, col, 1, 1)
             self.board.append(row_buttons)
