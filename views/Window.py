@@ -1,10 +1,11 @@
 
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QStatusBar, QGridLayout
 
+from views.AbstractWindow import AbstractWindow
 from views.Cell import Cell
 
 
-class Window(QMainWindow):
+class Window(QMainWindow, AbstractWindow):
     def __init__(self, controller):
         super(Window, self).__init__()
         self.controller = controller
@@ -37,9 +38,20 @@ class Window(QMainWindow):
             for col in range(3):
                 cell = Cell("-", row, col, self.controller)
                 row_buttons.append(cell)
+                cell.reset()
                 layout.addWidget(cell, row, col, 1, 1)
             self.board.append(row_buttons)
         widget.setLayout(layout)
         self.layout.addWidget(widget)
+
+    def display_status(self, msg):
+        self.status_bar.showMessage(msg)
+
+    def reset(self):
+        self.status_bar.showMessage("")
+        for row in range(3):
+            for col in range(3):
+                self.board[row][col].reset()
+
 
 

@@ -16,3 +16,8 @@ class Cell(QPushButton):
         self.setText(symbol)
         # self.setEnabled(False)
         self.setStyleSheet("background-color: red; font-size: 25px")
+
+    def reset(self):
+        self.setText("-")
+        # self.setEnabled(False)
+        self.setStyleSheet("background-color: lightgray; font-size: 25px")
